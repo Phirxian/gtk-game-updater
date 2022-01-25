@@ -11,20 +11,16 @@
 
 namespace render
 {
-    Browser::Browser(App *a) noexcept : app(a)
+    Browser::Browser(App *a) noexcept : app(a), Gtk::Widget(webkit_web_view_new())
     {
-        webkit = WEBKIT_WEB_VIEW(webkit_web_view_new());
+        webkit = WEBKIT_WEB_VIEW(gobj());
 
         WebKitSettings *settings = webkit_settings_new();
         webkit_web_view_set_settings(WEBKIT_WEB_VIEW(webkit), settings);
 
-        set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-        warp = Glib::wrap(GTK_WIDGET(webkit));
-
         webkit_web_view_load_uri(webkit, app->getHostNews().c_str());
         gtk_widget_grab_focus(GTK_WIDGET(webkit));
 
-        add(*warp);
         app->pages.append_page(*this, "news");
     }
     Browser::~Browser() noexcept

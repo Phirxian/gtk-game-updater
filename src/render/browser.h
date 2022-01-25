@@ -8,7 +8,7 @@ typedef struct _WebKitWebView WebKitWebView;
 class App;
 namespace render
 {
-    class Browser : public Gtk::ScrolledWindow
+    class Browser : public Gtk::Widget
     {
         public:
             Browser(App*) noexcept;
